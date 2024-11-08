@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
+use App\Models\Type;
 use Faker\Generator as Faker;
 
 class ProjectSeeder extends Seeder
@@ -14,6 +15,8 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
+        $typeIds = Type::all()->pluck('id');
+
         for ($i = 0; $i < 300; $i++) {
 
             $newProject = new Project();
@@ -22,7 +25,7 @@ class ProjectSeeder extends Seeder
             $newProject->status = $faker->boolean();
             $newProject->project_start_date = $faker->dateTimeBetween('-5 weeks', 'now');
             $newProject->description = $faker->realTextBetween(60, 300);
-
+            $newProject->Type_id = $faker->randomElement($typeIds);
 
 
             $ramdonTotalContributors = rand(2, 5);
